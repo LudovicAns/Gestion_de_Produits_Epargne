@@ -15,22 +15,38 @@ class Personne:
                 f"Paye un loyer de {self.loyer} € par mois, et a une depense mensuelle de {self.depenses_mensuelles} €.\n"
                 f"Son objectif est de {self.objectif} €, avec une duree d'epargne de {self.duree_epargne} ans.\n"
                 f"Son versement mensuel est de {self.versement_mensuel_utilisateur} €."
-                f"Sa capacité d'épargne est de {self._calcul_capacite_epargne()} €")
+                f"Sa capacité d'épargne est de {self._calcul_capacite_epargne():.2f} €")
 
     def __repr__(self):
         return f"""
-                Personne(
-                \tnom={self.nom},
-                \tage={self.age},
-                \trevenu_annuel={self.revenu_annuel},
-                \tloyer={self.loyer},
-                \tdepenses_mensuelles={self.depenses_mensuelles},
-                \tobjectif={self.objectif},
-                \tduree_epargne={self.duree_epargne},
-                \tversement_mensuel_utilisateur={self.versement_mensuel_utilisateur}
-                \tcapacite_epargne={self._calcul_capacite_epargne()}
-                )
-                """
+Personne(
+\tnom={self.nom},
+\tage={self.age},
+\trevenu_annuel={self.revenu_annuel},
+\tloyer={self.loyer},
+\tdepenses_mensuelles={self.depenses_mensuelles},
+\tobjectif={self.objectif},
+\tduree_epargne={self.duree_epargne},
+\tversement_mensuel_utilisateur={self.versement_mensuel_utilisateur}
+\tcapacite_epargne={self._calcul_capacite_epargne():.2f}
+)
+"""
 
     def _calcul_capacite_epargne(self) -> float:
         return (self.revenu_annuel / 12) - self.loyer - self.depenses_mensuelles
+
+
+if __name__ == '__main__':
+    personne_1 = Personne(
+        nom="Jacques",
+        age=25,
+        revenu_annuel=26000,
+        loyer=600,
+        depenses_mensuelles=300,
+        objectif=1000,
+        duree_epargne=10,
+        versement_mensuel_utilisateur=500
+    )
+
+    print(str(personne_1))
+    print(repr(personne_1))
