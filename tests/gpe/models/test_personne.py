@@ -12,7 +12,7 @@ class TestPersonne(unittest.TestCase):
             age=30,
             revenu_annuel=36000,
             loyer=800,
-            depenses_mensuelle=1000,
+            depenses_mensuelles=1000,
             objectif=50000,
             duree_epargne=10,
             versement_mensuel_utilisateur=500
@@ -24,7 +24,7 @@ class TestPersonne(unittest.TestCase):
             age=25,
             revenu_annuel=30000,
             loyer=700,
-            depenses_mensuelle=800,
+            depenses_mensuelles=800,
             objectif=40000,
             duree_epargne=8
         )
@@ -36,7 +36,7 @@ class TestPersonne(unittest.TestCase):
         self.assertEqual(self.personne_complete.age, 30)
         self.assertEqual(self.personne_complete.revenu_annuel, 36000)
         self.assertEqual(self.personne_complete.loyer, 800)
-        self.assertEqual(self.personne_complete.depenses_mensuelle, 1000)
+        self.assertEqual(self.personne_complete.depenses_mensuelles, 1000)
         self.assertEqual(self.personne_complete.objectif, 50000)
         self.assertEqual(self.personne_complete.duree_epargne, 10)
         self.assertEqual(self.personne_complete.versement_mensuel_utilisateur, 500)
@@ -46,7 +46,7 @@ class TestPersonne(unittest.TestCase):
         self.assertEqual(self.personne_sans_versement.age, 25)
         self.assertEqual(self.personne_sans_versement.revenu_annuel, 30000)
         self.assertEqual(self.personne_sans_versement.loyer, 700)
-        self.assertEqual(self.personne_sans_versement.depenses_mensuelle, 800)
+        self.assertEqual(self.personne_sans_versement.depenses_mensuelles, 800)
         self.assertEqual(self.personne_sans_versement.objectif, 40000)
         self.assertEqual(self.personne_sans_versement.duree_epargne, 8)
         self.assertEqual(self.personne_sans_versement.versement_mensuel_utilisateur, 0)
@@ -81,7 +81,7 @@ class TestPersonne(unittest.TestCase):
         self.assertIn("age=30", repr_personne)
         self.assertIn("revenu_annuel=36000", repr_personne)
         self.assertIn("loyer=800", repr_personne)
-        self.assertIn("depenses_mensuelle=1000", repr_personne)
+        self.assertIn("depenses_mensuelles=1000", repr_personne)
         self.assertIn("objectif=50000", repr_personne)
         self.assertIn("duree_epargne=10", repr_personne)
         self.assertIn("versement_mensuel_utilisateur=500", repr_personne)

@@ -1,6 +1,6 @@
 class Epargne:
 
-    def __init__(self, nom, taux_interet, fiscalite, duree_min, versement_max=None):
+    def __init__(self, nom: str, taux_interet: float, fiscalite: float, duree_min: int, versement_max: float = None):
         self.nom = nom
         self.taux_interet = taux_interet
         self.fiscalite = fiscalite
