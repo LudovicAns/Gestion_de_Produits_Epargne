@@ -329,10 +329,14 @@ def suggestion_epargne(personne: Personne, epargnes: List[Epargne], objectif: fl
             # Capital net
             capital_net = interet_total_net + versement_total
 
+            if epargne.versement_max and versement_total > epargne.versement_max:
+                continue
+
             resultats.append(ResultatEpargne(
                 nom_produit_epargne=epargne.nom,
                 effort_mensuel=pourcentage,
                 total_versement=versement_total,
+                versement_max_epargne=epargne.versement_max,
                 montant_net_final=capital_net,
                 objectif_atteint=capital_net >= objectif,
                 interet_brut=interet_total_brut,

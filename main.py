@@ -54,7 +54,7 @@ def main():
         # Trier les résultats par capital final décroissant
         resultats_tries = sorted(resultats, key=lambda r: r.montant_net_final, reverse=True)
 
-        print(f"{'Produit':<40} {'Effort mensuel':>15} {'Capital final':>15} {'Intérêts bruts':>15} {'Intérêts nets':>15} {'Versement total':>20}")
+        print(f"{'Produit':<45} {'Effort mensuel':>15} {'Capital final':>15} {'Intérêts bruts':>15} {'Intérêts nets':>15} {'Versement total':>15} {'Versement max épargne':>15}")
         print("-" * 120)
         for resultat in resultats_tries:
             resultat.afficher()
