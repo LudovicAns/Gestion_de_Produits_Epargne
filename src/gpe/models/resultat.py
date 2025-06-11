@@ -1,3 +1,5 @@
+import pandas as pd
+
 class ResultatEpargne:
 
     def __init__(self, nom_produit_epargne: str, effort_mensuel: float, total_versement: float, montant_net_final: float, objectif_atteint: bool, interet_brut: float, interet_net: float):
@@ -19,3 +21,22 @@ class ResultatEpargne:
                 f"\tinteret_brut={self.interet_brut:.2f} €,\n"
                 f"\tinteret_net={self.interet_net:.2f} €\n"
                 f")")
+
+    def afficher(self):
+        print(f"{self.nom_produit_epargne:<40} "
+              f"{self.effort_mensuel:>15.2f} % "
+              f"{self.montant_net_final:>15.2f} € "
+              f"{self.interet_brut:>15.2f} € "
+              f"{self.interet_net:>15.2f} €"
+              f"{self.total_versement:>15.2f} €")
+
+    def to_dataframe(self):
+        pd.DataFrame({
+            "nom_produit_epargne": self.nom_produit_epargne,
+            "effort_mensuel": self.effort_mensuel,
+            "total_versement": self.total_versement,
+            "montant_net_final": self.montant_net_final,
+            "objectif_atteint": self.objectif_atteint,
+            "interet_brut": self.interet_brut,
+            "interet_net": self.interet_net,
+        })

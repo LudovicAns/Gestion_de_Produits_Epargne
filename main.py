@@ -57,12 +57,7 @@ def main():
         print(f"{'Produit':<40} {'Effort mensuel':>15} {'Capital final':>15} {'Intérêts bruts':>15} {'Intérêts nets':>15} {'Versement total':>20}")
         print("-" * 120)
         for resultat in resultats_tries:
-            print(f"{resultat.nom_produit_epargne:<40} "
-                  f"{resultat.effort_mensuel:>15.2f} % "
-                  f"{resultat.montant_net_final:>15.2f} € "
-                  f"{resultat.interet_brut:>15.2f} € "
-                  f"{resultat.interet_net:>15.2f} €"
-                  f"{resultat.total_versement:>15.2f} €")
+            resultat.afficher()
 
 if __name__ == "__main__":
     main()
