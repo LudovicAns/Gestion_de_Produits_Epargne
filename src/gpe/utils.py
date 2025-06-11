@@ -34,7 +34,7 @@ def nettoyer_valeur_manquante(valeur: Any) -> Any:
     Returns:
         La valeur nettoyée ou None si c'est une valeur manquante
     """
-    if pd.isna(valeur) or valeur == "None" or valeur == "":
+    if pd.isna(valeur) or valeur == "None" or valeur == "" or valeur is None:
         return None
     return valeur
 

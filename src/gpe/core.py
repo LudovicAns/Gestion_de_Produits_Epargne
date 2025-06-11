@@ -3,10 +3,12 @@ import logging
 import pandas as pd
 from typing import List, Union
 from pathlib import Path
+from dataclasses import dataclass
 
 from src.gpe.models.personne import Personne
 from src.gpe.models.epargne import Epargne
-from src.gpe.utils import nettoyer_dataframe_personne, nettoyer_dataframe_epargne
+from src.gpe.models.resultat import ResultatEpargne
+from src.gpe.utils import nettoyer_dataframe_personne, nettoyer_dataframe_epargne, calcul_interets_composes
 
 # Configuration du logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -277,3 +279,65 @@ def save_epargnes(epargnes: List[Epargne], fichier: str) -> None:
     except Exception as e:
         logger.error(f"Erreur lors de la sauvegarde dans le fichier {fichier}: {str(e)}")
         raise
+
+def suggestion_epargne(personne: Personne, epargnes: List[Epargne], objectif: float, duree: int) -> List[ResultatEpargne]:
+    # Calculer la capacité d'épargne mensuelle de la personne
+    capacite_epargne_mensuelle = personne._calcul_capacite_epargne()
+
+    # Liste pour stocker les résultats
+    resultats = []
+
+    # Pour chaque produit d'épargne
+    for epargne in epargnes:
+        # Vérifier si la durée d'investissement est suffisante
+        if duree < epargne.duree_min:
+            # Ignorer ce produit si la durée est insuffisante
+            continue
+
+        # Définir les scénarios d'effort (pourcentages de la capacité d'épargne)
+        scenarios = [
+            (personne.versement_mensuel_utilisateur, 0),  # L'effort saisi par l'utilisateur
+            (0.25 * capacite_epargne_mensuelle, 25),      # 25% de la capacité
+            (0.50 * capacite_epargne_mensuelle, 50),      # 50% de la capacité
+            (0.75 * capacite_epargne_mensuelle, 75),      # 75% de la capacité
+            (1.00 * capacite_epargne_mensuelle, 100)      # 100% de la capacité
+        ]
+
+        # Pour chaque scénario
+        for versement_mensuel, pourcentage in scenarios:
+
+            # Calculer le versement annuel
+            versement_annuel = versement_mensuel * 12
+
+            # Vérifier si le versement respecte le plafond éventuel du produit
+            if epargne.versement_max is not None and versement_annuel * duree > epargne.versement_max:
+                # Ignorer ce scénario si le plafond est dépassé
+                continue
+
+            # Versement total
+            versement_total = versement_annuel * duree
+
+            # Calculer le capital brut avec intérêts
+            capital_brut = calcul_interets_composes(versement_annuel, epargne.taux_interet, duree)
+
+            # Intérêt total brut
+            interet_total_brut = capital_brut - versement_total
+
+            # Intérêt total net
+            interet_total_net = interet_total_brut * (1 - epargne.fiscalite)
+
+            # Capital net
+            capital_net = interet_total_net + versement_total
+
+            resultats.append(ResultatEpargne(
+                nom_produit_epargne=epargne.nom,
+                effort_mensuel=pourcentage,
+                total_versement=versement_total,
+                montant_net_final=capital_net,
+                objectif_atteint=capital_net >= objectif,
+                interet_brut=interet_total_brut,
+                interet_net=interet_total_net
+            ))
+
+
+    return resultats
